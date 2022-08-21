@@ -1,0 +1,4 @@
+bam:
+  db:
+    liquibase:
+      contexts: test

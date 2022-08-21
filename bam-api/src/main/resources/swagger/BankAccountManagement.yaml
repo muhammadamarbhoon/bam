@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: Bank Account Management
+  description: Bank Account Handling API specifications
+  version: 1.0.0
+servers:
+- url: http://localhost/bam
+tags:
+- name: Account
+paths:
+  /api/v1/accounts:
+    post:
+      tags:
+      - Account
+      summary: create account
+      operationId: createAccount
+      security:
+      - basicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+        required: true
+      responses:
+        201:
+          description: Account Created.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: "Location of the created resource i.e. GET /v1/accounts/{account-id}"
+        400:
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+    get:
+      tags:
+      - Account
+      summary: get account information along with balance
+      operationId: getAccounts
+      security:
+      - basicAuth: []
+      responses:
+        200:
+          description: Accounts Response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        400:
+          description: Invalid Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+  /api/v1/accounts/{account-id}/balance:
+    put:
+      tags:
+      - Account
+      summary: update account balance against currency type
+      operationId: updateAccountBalance
+      security:
+      - basicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAccBalanceRequest'
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+components:
+  parameters:
+    AccountId:
+      name: account-id
+      schema:
+        type: string
+        pattern: UUID
+      in: path
+      required: true
+  schemas:
+    ErrorInfo:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AccountRequest:
+      type: object
+      required:
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+        accountTitle:
+          type: string
+    UpdateAccBalanceRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+          example: EUR
+        crdDbtInd:
+           type: string
+           enum: [CREDIT, DEBIT]
+    AccountResponse:
+      type: object
+      properties:
+        accountId:
+          type: string  
+          format: UUID
+          example: 5e8bac93-fbfd-46de-85be-58b7ddb30efa          
+        accountNumber:
+          type: string
+          example: NL12ABNA999987652
+        accountTitle:
+          type: string
+          example: AmarM
+        creationTime:
+          type: string
+          format: date-time
+          example: 2020-01-13T17:09:42.411
+        updateTime:
+          type: string
+          format: date-time
+          example: 2022-01-15T20:09:42.411
+        cumulativeBalance:
+          description: Cumulative account balance after currency exchange
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+    Balance:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+           
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

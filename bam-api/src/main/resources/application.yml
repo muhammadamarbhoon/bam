@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: bam
+  datasource:
+    url: ${bam.db.jdbc.url:jdbc:h2:mem:bamdb;MODE=MSSQLServer;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;}
+    username: ${bam.db.username:bam-user}
+    password: ${bam.db.password:bam-user}
+    driverClassName: ${bam.db.driverClassName:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database: SQL_SERVER
+    database-platform: ${bam.jpa.hibernate.dialect:org.hibernate.dialect.SQLServer2012Dialect}
+    properties:
+      hibernate:
+        show_sql: ${bam.jpa.show_sql:true}
+        format_sql: ${bam.jpa.format_sql:true}
+  liquibase:
+    enabled: ${bam.db.liquibase.enabled:true}
+    contexts: ${bam.db.liquibase.contexts:none}
+    user: ${bam.db.liquibase.user:bam-user}
+    password: ${bam.db.liquibase.password:bam-user}
+  h2:
+    console:
+      enabled: ${bam.db.h2.console.enabled:true}
+server:
+  port: ${bam.server.port:8080}
+  servlet:
+    context-path: ${bam.server.context-path:/bam}
+  compression:
+    enabled: ${bam.server.compression.enabled:true}
+log:
+  path: ${bam.log.path:/app/log}

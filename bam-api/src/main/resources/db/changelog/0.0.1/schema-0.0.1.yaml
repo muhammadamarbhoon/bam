@@ -1,0 +1,237 @@
+databaseChangeLog:
+- changeSet:
+    id: schema-0.0.1
+    author: bam-user
+    changes:
+    - createTable:
+        tableName: User
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: UserName
+            type: VARCHAR(50)
+            constraints:
+              nullable: false
+        - column:
+            name: Password
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_User
+        tableName: User
+    - addUniqueConstraint:
+        columnNames: UserName
+        constraintName: UK_User_01
+        tableName: User
+    - createTable:
+        tableName: Role
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: Name
+            type: VARCHAR(50)
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_Role
+        tableName: Role
+    - addUniqueConstraint:
+        columnNames: Name
+        constraintName: UK_Role_01
+        tableName: Role
+    - createTable:
+        tableName: UserRole
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: UserId
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: RoleId
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_UserRole
+        tableName: UserRole
+    - addUniqueConstraint:
+        columnNames: UserId,RoleId
+        constraintName: UK_UserRole_01
+        tableName: UserRole
+    - addForeignKeyConstraint:
+        baseColumnNames: UserId
+        baseTableName: UserRole
+        constraintName: FK_UserRole_User
+        referencedColumnNames: Id
+        referencedTableName: User
+    - addForeignKeyConstraint:
+        baseColumnNames: RoleId
+        baseTableName: UserRole
+        constraintName: FK_UserRole_Role
+        referencedColumnNames: Id
+        referencedTableName: Role
+        
+    ###################################
+    #BANK ACCOUNT TABLES              #
+    ###################################
+    - createTable:
+        tableName: Account
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: AccountId
+            type: VARCHAR(36)
+            constraints:
+              nullable: false
+        - column:
+            name: AccountNumber
+            type: VARCHAR(50)
+            constraints:
+              nullable: false
+        - column:
+            name: AccountTitle
+            type: NVARCHAR(50)
+        - column:
+            name: CreationTime
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: UpdateTime
+            type: DATETIME
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_Account
+        tableName: Account
+    - addUniqueConstraint:
+        columnNames: AccountId
+        constraintName: UK_Account_01
+        tableName: Account
+    - addUniqueConstraint:
+        columnNames: AccountNumber
+        constraintName: UK_Account_02
+        tableName: Account
+        
+    - createTable:
+        tableName: Balance
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: Amount
+            type: DECIMAL(18,4)
+            constraints:
+              nullable: false
+        - column:
+            name: Currency
+            type: VARCHAR(3)
+            constraints:
+              nullable: false
+        - column:
+            name: AccountId
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: CreationTime
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: UpdateTime
+            type: DATETIME
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_Balance
+        tableName: Balance
+    - addUniqueConstraint:
+        columnNames: AccountId,Currency
+        constraintName: UK_Balance_01
+        tableName: Balance
+    - addForeignKeyConstraint:
+        baseColumnNames: AccountId
+        baseTableName: Balance
+        constraintName: FK_Balance_Account
+        referencedColumnNames: Id
+        referencedTableName: Account
+    
+    - createTable:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: Id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              nullable: false
+        - column:
+            name: BaseCcy
+            type: VARCHAR(3)
+            constraints:
+              nullable: false
+        - column:
+            name: TargetCcy
+            type: VARCHAR(3)
+            constraints:
+              nullable: false
+        - column:
+            name: Rate
+            type: DECIMAL(18,4)
+            constraints:
+              nullable: false
+        - column:
+            name: CreationTime
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: UpdateTime
+            type: DATETIME
+            constraints:
+              nullable: false
+    - addPrimaryKey:
+        columnNames: Id
+        constraintName: PK_CurrencyRate
+        tableName: CurrencyRate
+    - addUniqueConstraint:
+        columnNames: BaseCcy,TargetCcy
+        constraintName: UK_CurrencyRate_01
+        tableName: CurrencyRate
+       

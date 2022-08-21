@@ -1,0 +1,79 @@
+databaseChangeLog:
+- changeSet:
+    id: data-test
+    author: bam-user
+    changes:
+    - insert:
+        tableName: Account
+        columns:
+        - column:
+            name: AccountId
+            value: 5e8bac93-fbfd-46de-85be-58b7ddb30efa
+        - column:
+            name: AccountNumber
+            value: NL12ABNA999987652
+        - column:
+            name: AccountTitle
+            value: AmarM
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+
+    - insert:
+        tableName: Balance
+        columns:
+        - column:
+            name: Amount
+            value: 1000
+        - column:
+            name: Currency
+            value: EUR
+        - column:
+            name: AccountId
+            valueComputed: (SELECT Id FROM Account WHERE AccountNumber = 'NL12ABNA999987652')
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+    - insert:
+        tableName: Balance
+        columns:
+        - column:
+            name: Amount
+            value: 15000
+        - column:
+            name: Currency
+            value: PKR
+        - column:
+            name: AccountId
+            valueComputed: (SELECT Id FROM Account WHERE AccountNumber = 'NL12ABNA999987652')
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+                        
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: PKR
+        - column:
+            name: Rate
+            value: 250.5
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
