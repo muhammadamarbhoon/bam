@@ -157,6 +157,7 @@ components:
           format: date-time
           example: 2022-01-15T20:09:42.411
         cumulativeBalance:
+          type: number
           description: Cumulative account balance after currency exchange
         balances:
           type: array

@@ -1,5 +1,7 @@
 package com.account.bam.account;
 
+import static java.util.Objects.nonNull;
+
 import com.account.bam.client.ClientService;
 import com.account.bam.core.ApplicationError;
 import com.account.bam.core.ApplicationException;
@@ -24,15 +26,25 @@ public class AccountService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
     private final ClientService clientService;
 
-    public AccountService(AccountRepository accountRepository, ClientService clientService) {
+    public AccountService(AccountRepository accountRepository,
+                          AccountMapper accountMapper, ClientService clientService) {
 
         this.accountRepository = accountRepository;
+        this.accountMapper = accountMapper;
         this.clientService = clientService;
     }
 
     public String createAccount(AccountRequest accountRequest) {
+
+        Account existingAccount = accountRepository
+                .findByAccountNumber(accountRequest.getAccountNumber());
+
+        if (nonNull(existingAccount)) {
+            throw new ApplicationException(ApplicationError.ACCOUNT_ALREADY_EXIST);
+        }
         
         Account account = new Account();
         account.setAccountId(UUID.randomUUID().toString());
@@ -136,7 +148,7 @@ public class AccountService {
                 .findFirst();
     }
 
-    public AccountResponse getAccountDetails(String accountId) {
+    public AccountResponse getAccountDetails(String accountId, String baseCurrency) {
 
         Account account = accountRepository.findByAccountId(accountId);
 
@@ -144,6 +156,6 @@ public class AccountService {
             log.error("Account with ID {} does not exist", accountId);
             throw new ApplicationException(ApplicationError.ACCOUNT_NOT_FOUND);
         }
-        return AccountMapper.toAccountResponse(account);
+        return accountMapper.toAccountResponse(account, baseCurrency);
     }
 }

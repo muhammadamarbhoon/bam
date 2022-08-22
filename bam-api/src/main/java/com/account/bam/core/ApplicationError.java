@@ -16,7 +16,9 @@ public enum ApplicationError {
     INSUFFICIENT_BALANCE(HttpStatus.BAD_REQUEST, "BAM-07", "Insufficient balance", Level.INFO),
     ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND, "BAM-08", "Account not found", Level.ERROR),
     NO_FUNDS_AGAINST_GIVEN_CURRENCY(HttpStatus.BAD_REQUEST, "BAM-09", "No funds against given currency", Level.INFO),
-    DEBITING_SIMULATION_CALL_FAILED(HttpStatus.FAILED_DEPENDENCY, "BAM-10", "Debiting simulation call failed", Level.WARN);
+    DEBITING_SIMULATION_CALL_FAILED(HttpStatus.FAILED_DEPENDENCY, "BAM-10", "Debiting simulation call failed", Level.WARN),
+    CURRENCY_CONVERSION_RATE_MISSING(HttpStatus.BAD_REQUEST, "BAM-11", "Currency Conversion rate is missing", Level.WARN),
+    ACCOUNT_ALREADY_EXIST(HttpStatus.CONFLICT, "BAM-12", "Account with same accountNumber already exist", Level.ERROR);
 
 
     private HttpStatus httpStatus;

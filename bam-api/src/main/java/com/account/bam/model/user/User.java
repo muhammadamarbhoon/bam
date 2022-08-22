@@ -1,9 +1,7 @@
 package com.account.bam.model.user;
 
 import com.account.bam.model.role.Role;
-
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

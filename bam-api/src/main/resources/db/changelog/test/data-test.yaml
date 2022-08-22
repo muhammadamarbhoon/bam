@@ -58,22 +58,3 @@ databaseChangeLog:
         - column:
             name: UpdateTime
             valueComputed: CURRENT_TIMESTAMP
-                        
-    - insert:
-        tableName: CurrencyRate
-        columns:
-        - column:
-            name: BaseCcy
-            value: EUR
-        - column:
-            name: TargetCcy
-            value: PKR
-        - column:
-            name: Rate
-            value: 250.5
-        - column:
-            name: CreationTime
-            valueComputed: CURRENT_TIMESTAMP
-        - column:
-            name: UpdateTime
-            valueComputed: CURRENT_TIMESTAMP

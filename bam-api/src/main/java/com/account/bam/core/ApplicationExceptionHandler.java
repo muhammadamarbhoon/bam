@@ -1,11 +1,8 @@
 package com.account.bam.core;
 
 import com.account.bam.data.dto.ErrorInfo;
-
 import java.util.stream.Collectors;
-
 import javax.validation.ConstraintViolationException;
-
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

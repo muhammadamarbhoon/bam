@@ -51,3 +51,95 @@ databaseChangeLog:
         - column:
             name: RoleId
             valueComputed: (SELECT Id from Role where Name = 'USER')
+    
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: PKR
+        - column:
+            name: Rate
+            value: 0.0047
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+    
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: SEK
+        - column:
+            name: Rate
+            value: 0.094
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: RUB
+        - column:
+            name: Rate
+            value: 0.017
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: EUR
+        - column:
+            name: Rate
+            value: 1
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP
+    - insert:
+        tableName: CurrencyRate
+        columns:
+        - column:
+            name: BaseCcy
+            value: EUR
+        - column:
+            name: TargetCcy
+            value: USD
+        - column:
+            name: Rate
+            value: 1.01
+        - column:
+            name: CreationTime
+            valueComputed: CURRENT_TIMESTAMP
+        - column:
+            name: UpdateTime
+            valueComputed: CURRENT_TIMESTAMP

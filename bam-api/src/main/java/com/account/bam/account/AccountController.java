@@ -11,12 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Validated
 @RestController
@@ -65,11 +66,12 @@ public class AccountController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/api/v1/accounts/{account-id}")
     public ResponseEntity<AccountResponse> getAccountDetails(
-            @PathVariable(value = "account-id") UUID accountId) {
+            @PathVariable(value = "account-id") UUID accountId,
+            @RequestParam(defaultValue = "EUR") String baseCurrency) {
 
         log.debug("Request: GET /api/v1/accounts/{}", accountId);
 
-        AccountResponse response = accountService.getAccountDetails(accountId.toString());
+        AccountResponse response = accountService.getAccountDetails(accountId.toString(), baseCurrency);
 
         log.debug("Response Body: {}", JsonUtils.formatJson(response));
 
