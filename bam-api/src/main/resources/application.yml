@@ -32,4 +32,4 @@ server:
   compression:
     enabled: ${bam.server.compression.enabled:true}
 log:
-  path: ${bam.log.path:/app/log}
+  path: ${bam.log.path:app/log}
